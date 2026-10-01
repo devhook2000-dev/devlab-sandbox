@@ -7,6 +7,7 @@ Test repository for the Oracle DevLab agentic workflow. Each unit of work is des
 - Linux arm64 (Ubuntu 26.04). Never use x64-only packages, binaries or Docker images.
 - .NET SDK 10: target `net10.0`.
 - Do not download anything outside NuGet and GitHub. `curl` and `wget` are not available.
+- Scratch directory for temporary files: `/home/agent/scratch` (outside the repository, never committed).
 
 ## Workflow
 1. Read the assigned task file in full before changing anything.
@@ -14,7 +15,11 @@ Test repository for the Oracle DevLab agentic workflow. Each unit of work is des
 3. Touch only the files listed under "Files allowed". If you need others, stop and report.
 4. Make small, atomic commits with Conventional Commits messages (`feat:`, `fix:`, `test:`, `chore:`, `docs:`).
 5. Before opening the PR, every acceptance criterion must be verified by running its command.
-6. Push the branch and open the PR with `gh pr create`. Title: `NNN: <task title>`. Body:
+6. Push the branch and open the PR:
+   - write the PR body to `/home/agent/scratch/pr-body-NNN.md` with the file tools;
+   - run `gh pr create --base main --title "NNN: <task title>" --body-file /home/agent/scratch/pr-body-NNN.md`;
+   - never use heredocs or command substitution (`$(...)`) in shell commands: they are blocked by permissions.
+   The PR body contains:
    - summary of the change;
    - the acceptance criteria checklist, each item with the command run and its result;
    - test summary (passed/failed/skipped counts);
