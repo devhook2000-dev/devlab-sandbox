@@ -10,7 +10,7 @@ Why this task exists and anything the agent needs to know that is not in the cod
 `task/NNN-short-name`
 
 ## Files allowed
-- paths or globs the agent may create or modify
+- exact paths only, one per line (no globs), that the agent may create or modify
 
 ## Specification
 Precise requirements: signatures, rules, data, edge cases.
@@ -19,7 +19,7 @@ Precise requirements: signatures, rules, data, edge cases.
 - [ ] `command` → expected result (every item must be checkable by running a command)
 
 ## Stop criteria
-- conditions under which the agent stops and opens a draft PR instead of continuing
+- conditions under which the agent stops and writes the reason to `.devlab/STOP.md` (not committed) instead of continuing
 
 ## Out of scope
 - things the agent must not do in this task
